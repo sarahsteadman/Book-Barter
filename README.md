@@ -1,0 +1,1 @@
+The Book Barter API will allow users to post books they want to swap, view available books, and manage their book listings. It will handle user authentication, book management. Users will be able to comment on specific swap requests.
