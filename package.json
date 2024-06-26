@@ -1,0 +1,22 @@
+{
+  "name": "book-barter",
+  "version": "1.0.0",
+  "description": "The Book Barter API will allow users to post books they want to swap, view available books, and manage their book listings. It will handle user authentication, book management. Users will be able to comment on specific swap requests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-sesssion": "^1.15.5",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.4",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
+  }
+}

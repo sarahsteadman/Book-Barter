@@ -1,0 +1,41 @@
+// ********* LOCAL LINKS  ********* //
+// ********* LOCAL LINKS  ********* //
+
+###
+#User registration
+###
+# POST /api/users/register
+POST http://localhost:9000/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Travis Kelce",
+  "email": "TSlover13@example.com",
+  "password": "hello1234"
+}
+
+###
+# User Login
+###
+
+# POST /api/users/login
+POST http://localhost:9000/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password"
+}
+
+###
+# User Logout
+###
+
+# GET /api/users/logout
+GET http://localhost:9000/api/users/logout
+Authorization: Bearer <your_token>
+
+
+
+// ********* RENDER LINKS  ********* //
+// ********* RENDER LINKS  ********* //
