@@ -1,5 +1,3 @@
-
-// Middleware function to check if user is logged in
 const isLoggedOn = (req, res, next) => {
     // Check if user is authenticated (example using Passport.js)
     if (req.isAuthenticated()) {
@@ -9,4 +7,6 @@ const isLoggedOn = (req, res, next) => {
     }
 };
 
-module.exports = { isLoggedOn };
+module.exports = {
+    isLoggedOn,
+};

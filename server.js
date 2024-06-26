@@ -22,7 +22,7 @@ app.use(express.json());
 
 // Configure express-session middleware
 app.use(session({
-    secret: 'your_secret_key', // Replace with a long, random string (keep it secret)
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));

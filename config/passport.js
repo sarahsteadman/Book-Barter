@@ -16,31 +16,32 @@ passport.use(new GoogleStrategy({
     try {
         let user = await User.findOne({ googleId: id });
         if (user) {
-            return done(null, user);
+            return done(null, user); // User exists in the database
         }
 
+        // User doesn't exist, create a new user
         user = new User({
             googleId: id,
             name: displayName,
-            email: emails[0].value,
+            email: emails[0].value, // Assuming the first email is primary
         });
         await user.save();
-        done(null, user);
+        done(null, user); // Return the newly created user
     } catch (error) {
-        done(error, false);
+        done(error, false); // Handle errors during user creation
     }
 }));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user.id); // Serialize user ID into the session
 });
 
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id);
-        done(null, user);
+        done(null, user); // Deserialize user from the session
     } catch (error) {
-        done(error, false);
+        done(error, false); // Handle errors during deserialization
     }
 });
 

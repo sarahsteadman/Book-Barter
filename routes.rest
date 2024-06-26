@@ -4,13 +4,13 @@
 ###
 #User registration
 ###
-# POST /api/users/register
-POST http://localhost:9000/api/users/register
+# POST /users/register
+POST http://localhost:9000/users/register
 Content-Type: application/json
 
 {
-  "name": "Travis Kelce",
-  "email": "TSlover13@example.com",
+  "name": "Michael Scott",
+  "email": "littlekidlover@gmail.com",
   "password": "hello1234"
 }
 
@@ -18,12 +18,12 @@ Content-Type: application/json
 # User Login
 ###
 
-# POST /api/users/login
-POST http://localhost:9000/api/users/login
+# POST /users/login
+POST http://localhost:9000/users/login
 Content-Type: application/json
 
 {
-  "email": "TSlover13@example.com",
+  "email": "littlekidlover@gmail.com",
   "password": "hello1234"
 }
 
@@ -31,10 +31,28 @@ Content-Type: application/json
 # User Logout
 ###
 
-# GET /api/users/logout
-GET http://localhost:9000/api/users/logout
+# GET /users/logout
+GET http://localhost:9000/users/logout
 
+###
+# Get User Profile
+###
 
+# GET /users/profile
+GET http://localhost:9000/users/profile
+
+###
+# Update User Profile with Password Verification
+###
+
+# PUT /users/profile
+PUT http://localhost:9000/users/profile
+Content-Type: application/json
+
+{
+  "name": "Michael Scott",
+  "email": "scrantonforever@gmail.com"
+}
 
 // ********* RENDER LINKS  ********* //
 // ********* RENDER LINKS  ********* //
