@@ -46,7 +46,9 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-    res.json({ message: 'User logged out' });
+    req.logout(() => {
+        res.status(200).json({ message: 'User logged out successfully' });
+    });
 };
 
 const googleAuth = (req, res) => {
