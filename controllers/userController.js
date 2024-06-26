@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -25,9 +26,11 @@ const registerUser = async (req, res) => {
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
+        console.error('Error in registerUser:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 
 const loginUser = async (req, res) => {
@@ -47,6 +50,7 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
     } catch (error) {
+        console.error('Error in loginUser:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -97,27 +101,37 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-// Update user profile
 const updateUserProfile = async (req, res) => {
-    const { name, email } = req.body;
+    const { name, email, currentPassword, newPassword } = req.body;
 
     try {
-        // Fetch user details from request object (assuming passport places user in req.user)
-        let user = req.user; // This assumes req.user contains the authenticated user object
+        let user = req.user; // Assuming req.user contains the authenticated user object
+
+        // Verify current password
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Current password is incorrect' });
+        }
 
         // Update user details
         user.name = name;
         user.email = email;
+
+        // If newPassword is provided, update password
+        if (newPassword) {
+            const hashedPassword = await bcrypt.hash(newPassword, 12);
+            user.password = hashedPassword;
+        }
 
         // Save updated user
         await user.save();
 
         res.json({ message: 'Profile updated successfully', user });
     } catch (error) {
+        console.error('Error in updateUserProfile:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
-
 module.exports = {
     registerUser,
     loginUser,

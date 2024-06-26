@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { isLoggedOn } = require('../middlewares/authMiddleware.js');
+const { isLoggedOn } = require('../middlewares/authMiddleware');
 const { registerUser, loginUser, logoutUser, getUserProfile, updateUserProfile } = require('../controllers/userController'); // Import controller methods
 const router = express.Router();
 
