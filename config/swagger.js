@@ -1,6 +1,8 @@
 const swaggerAutogen = require('swagger-autogen')();
 
 const outputFile = './config/swagger_output.json';
-const endpointsFiles = ['./routes/index.js']; // Adjust this to include all relevant route files
-
+const endpointsFiles = ['./routes/index.js']; 
+/**
+ * Automatically generate Swagger documentation based on route files.
+ */
 swaggerAutogen(outputFile, endpointsFiles);

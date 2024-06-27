@@ -9,6 +9,8 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/logout', logoutUser);
 
+// Google OAuth authentication routes
+
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
@@ -37,6 +39,8 @@ router.get('/auth/google/callback',
         res.redirect('/');
     });
 });
+
+// User profile routes
 
 router.get('/profile', isLoggedOn, getUserProfile);
 router.put('/profile', isLoggedOn, updateUserProfile);
