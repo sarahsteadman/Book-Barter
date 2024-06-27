@@ -1,3 +1,7 @@
+
+/**
+ * Middleware function to check if user is logged on (authenticated).
+ */
 const isLoggedOn = function(req, res, next) {
     console.log('Checking authentication status...');
     console.log('Session:', req.session);

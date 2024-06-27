@@ -7,6 +7,9 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+/**
+ * Configure Passport with Google OAuth 2.0 strategy for authentication.
+ */
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -31,10 +34,15 @@ passport.use(new GoogleStrategy({
         done(error, false); // Handle errors during user creation
     }
 }));
-
+/**
+ * Serialize user ID into the session.
+ */
 passport.serializeUser((user, done) => {
-    done(null, user.id); // Serialize user ID into the session
+    done(null, user.id); 
 });
+/**
+ * Deserialize user from the session based on user ID.
+ */
 
 passport.deserializeUser(async (id, done) => {
     try {
