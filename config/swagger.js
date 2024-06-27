@@ -5,4 +5,6 @@ const endpointsFiles = ['./routes/index.js'];
 /**
  * Automatically generate Swagger documentation based on route files.
  */
-swaggerAutogen(outputFile, endpointsFiles);
+swaggerAutogen(outputFile, endpointsFiles, {
+    host: 'localhost:9000',
+});
