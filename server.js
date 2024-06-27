@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
@@ -24,7 +22,8 @@ app.use(express.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: false } // Ensure secure is false for local development
 }));
 
 // Initialize Passport and session middleware

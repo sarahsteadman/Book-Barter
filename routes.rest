@@ -51,7 +51,8 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever@gmail.com"
+  "email": "scrantonforever@gmail.com",
+  "password": "hello1234"
 }
 
 // ********* RENDER LINKS  ********* //

@@ -47,8 +47,19 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+        // Log in the user
+        req.login(user, err => {
+            if (err) {
+                console.error('Error logging in user:', err);
+                return res.status(500).json({ message: 'Server error' });
+            }
+            console.log('User logged in successfully');
+            console.log('Session after login:', req.session);
+
+            // Optionally, you can generate a JWT token and return it here
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+        });
     } catch (error) {
         console.error('Error in loginUser:', error);
         res.status(500).json({ message: 'Server error' });
@@ -107,10 +118,19 @@ const updateUserProfile = async (req, res) => {
     try {
         let user = req.user; // Assuming req.user contains the authenticated user object
 
+        // Log req.user to debug
+        console.log('req.user:', req.user);
+
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
         // Verify current password
-        const isMatch = await bcrypt.compare(currentPassword, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Current password is incorrect' });
+        if (currentPassword) {
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Current password is incorrect' });
+            }
         }
 
         // Update user details
@@ -132,6 +152,7 @@ const updateUserProfile = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 module.exports = {
     registerUser,
     loginUser,
