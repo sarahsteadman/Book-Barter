@@ -8,5 +8,5 @@ router.post('/', swapsController.createSwap);
 router.put('/:swapId', swapsController.updateSwap);
 router.delete('/:swapId', swapsController.deleteSwap);
 
-module.exports = {router};
+module.exports = router;
 
