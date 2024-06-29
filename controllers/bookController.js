@@ -3,10 +3,36 @@ const Schema = mongoose.Schema;
 const model = require("../models/bookModel")
 const utilities = require("../utils/index")
 
-const bookFunctions = {};
+const bookController = {};
+
+
+//Retrieves all books from the database
+bookController.getAllBooks = async function (req, res) {
+    try {
+        const books = await model.find();
+
+        res.status(200).json(books);
+    } catch (error) {
+        console.error('Error in getAllBooks:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+//Retrieves a single book by it's Id
+bookController.getBookById = async function (req, res) {
+    try {
+        const bookId = req.bookId
+        const book = await model.findOne(bookId);
+
+        res.status(200).json(book);
+    } catch (error) {
+        console.error('Error in getBookById:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
 
 //Receives ISBN and condition, requests book information from the google books api, creates the bookSchema and saves it to the database
-bookFunctions.addBook = async function (req, res) {
+bookController.addBook = async function (req, res) {
     try {
         let bookInputs = { ISBN, condition, swap } = req.body
         let requestUri = `https://www.googleapis.com/books/v1/volumes?q=${bookInputs.ISBN}`
@@ -32,11 +58,10 @@ bookFunctions.addBook = async function (req, res) {
         res.status(500).json({ message: 'Server error' });
     }
 }
-
 async function getBookByISBN() {
     async function findBookByISBN(isbn) {
         try {
-            const book = await Book.findOne({ isbn: isbn });
+            const book = await model.findOne({ isbn: isbn });
             return book;
         } catch (error) {
             console.error('Error finding book by ISBN:', error);
@@ -45,4 +70,49 @@ async function getBookByISBN() {
     }
 }
 
-module.exports = bookFunctions;
+bookController.updateBook = async function (req, res) {
+    const { bookId } = req.params;
+    try {
+        let bookInputs = {
+            title,
+            author,
+            description,
+            condition,
+            ISBN,
+            swap
+        } = req.body
+
+        // let updatedBook = new model(bookInputs)
+        // let completedBook = await model.findOneAndUpdate({ _id: id }, updatedBook, { new: true })
+        let completedBook = await model.findOneAndUpdate({ _id: bookId }, bookInputs, { new: true });
+
+        if (!completedBook) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        res.status(201).json({ message: 'Book updated', book: completedBook });
+    }
+    catch (error) {
+        console.error('Error in updateBook:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+}
+
+bookController.deleteBook = async function (req, res) {
+    try {
+        const { bookId } = req.params;
+
+        const deletedBook = await model.findByIdAndDelete(bookId);
+
+        if (!deletedBook) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+
+        res.status(200).json({ message: 'Book deleted', book: deletedBook });
+    } catch (error) {
+        console.error('Error in deleteBook:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+module.exports = bookController;
