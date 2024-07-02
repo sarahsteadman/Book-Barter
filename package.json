@@ -6,13 +6,15 @@
   "scripts": {
     "start": "npm run swagger && node server.js",
     "swagger": "node ./config/swagger.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "client": "^0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -21,7 +23,11 @@
     "mongoose": "^8.4.4",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "rest": "^2.0.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
