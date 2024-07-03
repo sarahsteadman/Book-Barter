@@ -1,12 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const User = require('../models/userModel');
-const swap = require('../models/swapsModel');
+const Swap = require('../models/swapsModel');
+
+function convertToObjectId(id){
+
+    return new mongoose.Types.ObjectId(id);
+}
 
 //get all swaps so user can search through them. Doesn't have to be logged in.
 const getAllSwaps = async (req, res) => {
 
     try {
-        const swaps = await swap.find();
+        const swaps = await Swap.swap.find();
+
+        if (!swaps[0]) {
+            return res.status(404).json({ message: 'No Swaps found.' });
+        }
 
         res.status(200).json(swaps);
     } catch (error) {
@@ -21,8 +31,11 @@ const getSwap = async (req, res) => {
 
     try {
         const swapId = req.params.swapId
-        const swaps = await swap.findOne(swapId);
+        const swaps = await Swap.swap.findOne(convertToObjectId(swapId));
 
+        if (!swaps) {
+            return res.status(404).json({ message: 'No matching Swap found.' });
+        }
         res.status(200).json(swaps);
     } catch (error) {
         console.error('getSwap error:', error);
@@ -35,7 +48,7 @@ const getSwap = async (req, res) => {
 
 //     try {
 //         const bookId = req.params.bookId
-//         const swaps = await swap.findOne(bookId);
+//         const swaps = await Swap.swap.findOne(bookId);
 
 //         res.status(200).json(swaps);
 //     } catch (error) {
@@ -50,7 +63,7 @@ const getSwap = async (req, res) => {
 
 //     try {
 //         const userId = req.params.bookId
-//         const swaps = await swap.findOne(userId);
+//         const swaps = await Swap.swap.findOne(userId);
 
 //         res.status(200).json(swaps);
 //     } catch (error) {
@@ -67,7 +80,7 @@ const createSwap = async (req, res) => {
 
     try{
 
-        const newSwap = new swap({ user, book, Description, Location});
+        const newSwap = new Swap.swap({ user, book, Description, Location});
         
         await newSwap.save();
 
@@ -94,9 +107,9 @@ const updateSwap = async (req, res) => {
 
         const { user, book, Description, Location } = req.body;
 
-        const updatedInfo = new swap({ user, book, Description, Location});
+        const updatedInfo = new Swap.swap({ user, book, Description, Location});
 
-        let updatedSwap = await swap.findOneAndUpdate({ _id: swapId }, updatedInfo, { new: true });
+        let updatedSwap = await Swap.swap.findOneAndUpdate({ _id: convertToObjectId(swapId) }, updatedInfo);
 
         if (!updatedSwap) {
             return res.status(404).json({ message: 'No matching Swap found.' });
@@ -122,7 +135,7 @@ const deleteSwap = async (req, res) => {
 
         //add functionality to verify user is the owner of the swap
 
-        const removedSwap = await model.findByIdAndDelete(swapId);
+        const removedSwap = await Swap.swap.findByIdAndDelete(convertToObjectId(swapId));
 
         if (!removedSwap) {
             return res.status(404).json({ message: 'No matching swap found.' });
