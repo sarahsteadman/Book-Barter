@@ -9,9 +9,10 @@ POST http://localhost:9000/users/register
 Content-Type: application/json
 
 {
-  "name": "Michael Scott",
-  "email": "littlekidlover@gmail.com",
-  "password": "hello1234"
+  "name": "Santa Clause",
+  "email": "northpolecaptain@gmail.com",
+  "password": "",
+  "username": "sclause"
 }
 
 ###

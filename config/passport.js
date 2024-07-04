@@ -23,10 +23,16 @@ passport.use(new GoogleStrategy({
         }
 
         // User doesn't exist, create a new user
+        const username = emails[0].value.split('@')[0]; // Default username based on email prefix
+        const randomPassword = crypto.randomBytes(16).toString('hex'); // Generate a random password
+        const hashedPassword = await bcrypt.hash(randomPassword, 12); // Hash the random password
+
         user = new User({
             googleId: id,
             name: displayName,
             email: emails[0].value, // Assuming the first email is primary
+            username: username, // Set the default username
+            password: hashedPassword, // Save the hashed random password
         });
         await user.save();
         done(null, user); // Return the newly created user
@@ -34,6 +40,7 @@ passport.use(new GoogleStrategy({
         done(error, false); // Handle errors during user creation
     }
 }));
+
 /**
  * Serialize user ID into the session.
  */
