@@ -109,7 +109,7 @@ const updateSwap = async (req, res) => {
 
         const updatedInfo = new Swap.swap({ user, book, Description, Location});
 
-        let updatedSwap = await Swap.swap.findOneAndUpdate({ _id: convertToObjectId(swapId) }, updatedInfo);
+        let updatedSwap = await Swap.swap.findOneAndUpdate({ _id: swapId }, updatedInfo, {new: true});
 
         if (!updatedSwap) {
             return res.status(404).json({ message: 'No matching Swap found.' });
