@@ -87,6 +87,7 @@ const logoutUser = (req, res) => {
     });
 };
 
+
 const googleAuth = async (req, res) => {
     try {
         // You can access user details from req.user after authentication
@@ -96,13 +97,17 @@ const googleAuth = async (req, res) => {
         let user = await User.findOne({ googleId: id });
 
         if (!user) {
-            // If user doesn't exist, create a new user without password
+            // If user doesn't exist, create a new user with a random password
             let username = emails[0].value.split('@')[0]; // Default username based on email
+            const randomPassword = crypto.randomBytes(16).toString('hex'); // Generate a random password
+            const hashedPassword = await bcrypt.hash(randomPassword, 12); // Hash the random password
+
             user = new User({
                 googleId: id,
                 name: displayName,
                 email: emails[0].value,
-                username: username // Set the default username
+                username: username, // Set the default username
+                password: hashedPassword, // Save the hashed random password
             });
             await user.save();
         }
