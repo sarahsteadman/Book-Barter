@@ -56,6 +56,20 @@ Content-Type: application/json
   "password": "hello1234",
   "username": "mscott"
 }
+###
+# GET /comments/
+GET http://localhost:9000/comments/
+
+###
+# POST /comments/
+POST http://localhost:9000/comments/
+Content-Type: application/json
+
+{
+  "user": "test",
+  "book": "test",
+  "Comment": "test"
+}
 
 // ********* RENDER LINKS  ********* //
 // ********* RENDER LINKS  ********* //
