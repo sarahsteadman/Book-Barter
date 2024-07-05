@@ -24,10 +24,10 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "rest": "^2.0.0",
-    "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "swagger-autogen": "^2.23.7"
   }
 }
