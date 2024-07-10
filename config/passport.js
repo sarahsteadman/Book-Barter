@@ -2,6 +2,8 @@
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const crypto = require('crypto'); // Import crypto module
+const bcrypt = require('bcrypt'); // Import bcrypt module
 const User = require('../models/userModel');
 const dotenv = require('dotenv');
 
@@ -47,10 +49,10 @@ passport.use(new GoogleStrategy({
 passport.serializeUser((user, done) => {
     done(null, user.id); 
 });
+
 /**
  * Deserialize user from the session based on user ID.
  */
-
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id);
