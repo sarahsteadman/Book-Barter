@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const User = require('../models/userModel');
-const isLoggedOn = require('../middlewares/auth');
+const { isLoggedOn } = require('../middlewares/auth'); // Correct destructuring
 const { registerUser, loginUser, logoutUser, getUserProfile, updateUserProfile, updateUserUsername } = require('../controllers/userController');
 const router = express.Router();
 
@@ -82,6 +82,7 @@ router.get('/auth/google/callback',
       }
     }
   });
+
 // User profile routes
 router.get('/profile', isLoggedOn, getUserProfile);
 router.put('/profile', isLoggedOn, updateUserProfile);
