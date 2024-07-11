@@ -7,7 +7,7 @@ dotenv.config();
 
 
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, username } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -15,13 +15,18 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).json({ message: 'Username already taken' });
+        }
+
         if (!password) {
             return res.status(400).json({ message: 'Password is required' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const newUser = new User({ name, email, password: hashedPassword });
-        
+        const newUser = new User({ name, email, password: hashedPassword, username });
+
         await newUser.save();
 
         res.status(201).json({ message: 'User registered successfully' });
@@ -33,11 +38,21 @@ const registerUser = async (req, res) => {
 
 
 
+
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { login, password } = req.body; // 'login' can be either email or username
 
     try {
-        const user = await User.findOne({ email });
+        // Check if the login input is an email or username
+        let user;
+        if (login.includes('@')) {
+            // Assume it's an email
+            user = await User.findOne({ email: login });
+        } else {
+            // Assume it's a username
+            user = await User.findOne({ username: login });
+        }
+
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
@@ -58,7 +73,7 @@ const loginUser = async (req, res) => {
 
             // Optionally, you can generate a JWT token and return it here
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+            res.json({ message: 'User Successfully logged in', token, user: { id: user._id, name: user.name, email: user.email, username: user.username } });
         });
     } catch (error) {
         console.error('Error in loginUser:', error);
@@ -82,25 +97,29 @@ const googleAuth = async (req, res) => {
         let user = await User.findOne({ googleId: id });
 
         if (!user) {
-            // If user doesn't exist, create a new user without password
+            // If user doesn't exist, create a new user with a random password
+            let username = emails[0].value.split('@')[0]; // Default username based on email
+            const randomPassword = crypto.randomBytes(16).toString('hex'); // Generate a random password
+            const hashedPassword = await bcrypt.hash(randomPassword, 12); // Hash the random password
+
             user = new User({
                 googleId: id,
                 name: displayName,
                 email: emails[0].value,
+                username: username, // Set the default username
+                password: hashedPassword, // Save the hashed random password
             });
             await user.save();
         }
 
         // Optionally, you can generate a JWT token and return it here
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+        res.json({ token, user: { id: user._id, name: user.name, email: user.email, username: user.username } });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
-
-
 // Fetch user profile
 const getUserProfile = async (req, res) => {
     try {
@@ -113,7 +132,7 @@ const getUserProfile = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-    const { name, email, currentPassword, newPassword } = req.body;
+    const { name, email, currentPassword, newPassword, username } = req.body;
 
     try {
         let user = req.user; // Assuming req.user contains the authenticated user object
@@ -136,6 +155,7 @@ const updateUserProfile = async (req, res) => {
         // Update user details
         user.name = name;
         user.email = email;
+        user.username = username || user.username;
 
         // If newPassword is provided, update password
         if (newPassword) {
@@ -153,6 +173,34 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
+const updateUserUsername = async (req, res) => {
+    const { userId, username } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        // Check if the username is already taken
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username already taken' });
+        }
+
+        // Update the user's username
+        user.username = username;
+        await user.save();
+
+        res.json({ message: 'Username updated successfully', user });
+    } catch (error) {
+        console.error('Error in updateUserUsername:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
 module.exports = {
     registerUser,
     loginUser,
@@ -160,4 +208,5 @@ module.exports = {
     googleAuth,
     getUserProfile, 
     updateUserProfile,
+    updateUserUsername
 };

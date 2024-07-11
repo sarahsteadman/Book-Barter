@@ -9,9 +9,10 @@ POST http://localhost:9000/users/register
 Content-Type: application/json
 
 {
-  "name": "Michael Scott",
-  "email": "littlekidlover@gmail.com",
-  "password": "hello1234"
+  "name": "Santa Clause",
+  "email": "northpolecaptain@gmail.com",
+  "password": "",
+  "username": "sclause"
 }
 
 ###
@@ -23,7 +24,7 @@ POST http://localhost:9000/users/login
 Content-Type: application/json
 
 {
-  "email": "littlekidlover@gmail.com",
+  "login": "scrantonforever@gmail.com",
   "password": "hello1234"
 }
 
@@ -52,7 +53,22 @@ Content-Type: application/json
 {
   "name": "Michael Scott",
   "email": "scrantonforever@gmail.com",
-  "password": "hello1234"
+  "password": "hello1234",
+  "username": "mscott"
+}
+###
+# GET /comments/
+GET http://localhost:9000/comments/
+
+###
+# POST /comments/
+POST http://localhost:9000/comments/
+Content-Type: application/json
+
+{
+  "user": "test",
+  "book": "test",
+  "Comment": "test"
 }
 
 // ********* RENDER LINKS  ********* //
