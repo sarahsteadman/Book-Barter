@@ -13,6 +13,10 @@ const bookValidationRules = () => {
         body('description')
             .isString().withMessage('Description must be a string')
             .isLength({ min: 1, max: 3000 }).withMessage('Description must be between 1 and 3000 characters'),
+        body('genre')
+            .isString().withMessage('Genre must be a string')
+            .notEmpty().withMessage('Genre is required')
+            .isLength({ min: 1, max: 100 }).withMessage('Genre must be between 1 and 100 characters'),
         body('condition')
             .isString().withMessage('Condition must be a string')
             .notEmpty().withMessage('Condition is required')
@@ -34,7 +38,10 @@ const addBookValidationRules = () => {
             .isString().withMessage('Condition must be a string')
             .notEmpty().withMessage('Condition is required')
             .isLength({ min: 1, max: 255 }).withMessage('Condition must be between 1 and 255 characters'),
-
+        body('genre')
+            .isString().withMessage('Genre must be a string')
+            .notEmpty().withMessage('Genre is required')
+            .isLength({ min: 1, max: 100 }).withMessage('Genre must be between 1 and 100 characters'),
         body('ISBN')
             .isInt({ gt: -1 }).withMessage('ISBN must be an integer greater than or equal to 0')
             .isLength({ min: 10, max: 13 }).withMessage('ISBN must be between 10 and 13 characters')

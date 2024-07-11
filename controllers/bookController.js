@@ -47,7 +47,7 @@ bookController.addBook = async function (req, res) {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        let bookInputs = { ISBN, condition, swap } = req.body
+        let bookInputs = { ISBN, genre, condition, swap } = req.body
         let requestUri = `https://www.googleapis.com/books/v1/volumes?q=${bookInputs.ISBN}`
         let bookData = await utilities.apiFetch(requestUri)
         let title = bookData.items[0].volumeInfo.title || 'Unknown Title';
@@ -57,6 +57,7 @@ bookController.addBook = async function (req, res) {
             title,
             author,
             description,
+            genre,
             condition,
             ISBN,
             swap
@@ -94,6 +95,7 @@ bookController.updateBook = async function (req, res) {
             title,
             author,
             description,
+            genre,
             condition,
             ISBN,
             swap
