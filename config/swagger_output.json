@@ -8,7 +8,7 @@
   "host": "book-barter.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/users/register": {
