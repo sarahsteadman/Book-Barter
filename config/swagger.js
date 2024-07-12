@@ -7,4 +7,5 @@ const endpointsFiles = ['./routes/index.js'];
  */
 swaggerAutogen(outputFile, endpointsFiles, {
     host: 'book-barter.onrender.com',
+    schemes: ['https'],
 });
