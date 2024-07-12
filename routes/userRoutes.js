@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const User = require('../models/userModel');
-const isLoggedOn = require('../middlewares/auth');
+const { isLoggedOn } = require('../middlewares/auth'); // Correct destructuring
 const { registerUser, loginUser, logoutUser, getUserProfile, updateUserProfile, updateUserUsername } = require('../controllers/userController');
 const router = express.Router();
 
@@ -12,7 +12,6 @@ router.get('/logout', logoutUser);
 
 // Google OAuth authentication routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {

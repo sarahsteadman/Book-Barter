@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const model = require("../models/bookModel")
 const utilities = require("../utils/index")
+const { validationResult } = require('express-validator');
 
 const bookController = {};
 
@@ -20,9 +21,17 @@ bookController.getAllBooks = async function (req, res) {
 
 //Retrieves a single book by it's Id
 bookController.getBookById = async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
-        const bookId = req.bookId
-        const book = await model.findOne(bookId);
+        const bookId = req.params.bookId;
+        const book = await model.findOne({ _id: bookId });
+
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
 
         res.status(200).json(book);
     } catch (error) {
@@ -33,8 +42,12 @@ bookController.getBookById = async function (req, res) {
 
 //Receives ISBN and condition, requests book information from the google books api, creates the bookSchema and saves it to the database
 bookController.addBook = async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
-        let bookInputs = { ISBN, condition, swap } = req.body
+        let bookInputs = { ISBN, genre, condition, swap } = req.body
         let requestUri = `https://www.googleapis.com/books/v1/volumes?q=${bookInputs.ISBN}`
         let bookData = await utilities.apiFetch(requestUri)
         let title = bookData.items[0].volumeInfo.title || 'Unknown Title';
@@ -44,6 +57,7 @@ bookController.addBook = async function (req, res) {
             title,
             author,
             description,
+            genre,
             condition,
             ISBN,
             swap
@@ -71,12 +85,17 @@ async function getBookByISBN() {
 }
 
 bookController.updateBook = async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const { bookId } = req.params;
     try {
         let bookInputs = {
             title,
             author,
             description,
+            genre,
             condition,
             ISBN,
             swap
@@ -99,10 +118,14 @@ bookController.updateBook = async function (req, res) {
 }
 
 bookController.deleteBook = async function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const { bookId } = req.params;
 
-        const deletedBook = await model.findByIdAndDelete(bookId);
+        const deletedBook = await model.findByIdAndDelete({ _id: bookId });
 
         if (!deletedBook) {
             return res.status(404).json({ message: 'Book not found' });
