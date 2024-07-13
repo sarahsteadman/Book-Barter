@@ -62,19 +62,17 @@ const updateComment = async (req, res) => {
  
     try{
         const commentId = req.params.commentId;
-
         const { user, swap, Comment, Date } = req.body;
 
-        const updatedInfo = new comment.comment({ user, swap, Comment, Date});
+        const updatedInfo = { user, swap, Comment, Date };
 
         let updatedComment = await comment.comment.findOneAndUpdate({ _id: commentId }, updatedInfo, {new: true});
 
         if (!updatedComment) {
-            return res.status(404).json({ message: 'No matching Swap found.' });
+            return res.status(404).json({ message: 'No matching comment found.' });
         }
 
         res.status(201).json({ message: 'Comment updated'});
-
     }catch (error) {
         console.error('updateComment error:', error);
         res.status(500).json({ message: 'Server error' });

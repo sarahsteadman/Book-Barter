@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ###
 # PUT /comments/
-POST http://localhost:9000/comments/6692a8fc9116afb068df84f3
+PUT http://localhost:9000/comments/6692a8fc9116afb068df84f3
 Content-Type: application/json
 
 {
