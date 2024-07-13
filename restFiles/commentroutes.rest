@@ -1,0 +1,34 @@
+###
+# GET /comments/
+GET http://localhost:9000/comments/
+
+###
+# GET /comments/id
+GET http://localhost:9000/comments/6692a8fc9116afb068df84f3
+
+###
+# POST /comments/
+POST http://localhost:9000/comments/
+Content-Type: application/json
+
+{
+  "user": "mscott",
+  "swap": "The Little Prince",
+  "Comment": "I would like this book!"
+}
+
+###
+# PUT /comments/
+POST http://localhost:9000/comments/6692a8fc9116afb068df84f3
+Content-Type: application/json
+
+{
+  "user": "mscott",
+  "swap": "The Little Prince",
+  "Comment": "I would like this book."
+}
+
+###
+# DELETE /comments/id
+DELETE http://localhost:9000/comments/6688491b19c3c4359faeeef1
+Content-Type: application/json
