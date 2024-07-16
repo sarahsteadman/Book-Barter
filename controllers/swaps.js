@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/userModel');
 const Swap = require('../models/swapsModel');
+const auth = require('../middlewares/auth');
 
 function convertToObjectId(id){
 
@@ -12,6 +13,10 @@ function convertToObjectId(id){
 const getAllSwaps = async (req, res) => {
 
     try {
+
+        const user = req.user; // This assumes req.user contains the authenticated user object
+        console.log(json({ user }));
+
         const swaps = await Swap.swap.find();
 
         if (!swaps[0]) {
@@ -99,10 +104,7 @@ const updateSwap = async (req, res) => {
         const swapId = req.params.swapId;
 
         //should I use the User variable or require that they send the user's id?
-        const userId = req.params.userId;
-
-        //add functionality to verify user is the owner of the swap
-
+        // const userId = req.user._id
 
 
         const { user, book, Description, Location } = req.body;
@@ -110,6 +112,11 @@ const updateSwap = async (req, res) => {
         
 
         let oldSwapInfo = await Swap.swap.findOne(convertToObjectId(swapId));
+
+        //add functionality to verify user is the owner of the swap
+        await auth.isCreator(req, "swap", oldSwapInfo._id, res);
+
+
 
         oldSwapInfo.user = user;
         oldSwapInfo.book = book;
