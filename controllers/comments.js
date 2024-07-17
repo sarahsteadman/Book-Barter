@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const comment = require('../models/commentModel');
 
+function convertToObject(id){
+
+    return new mongoose.Types.ObjectId(id);
+}
+
 //Gets all comments
 const getAllComments = async function (req, res) {
     try {
@@ -13,7 +18,7 @@ const getAllComments = async function (req, res) {
 
         res.status(200).json(comments);
     } catch (error) {
-        console.error('Error in getAllBooks:', error);
+        console.error('Error in getAllComments:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -23,7 +28,7 @@ const getComment = async (req, res) => {
 
     try {
         const commentId = req.params.commentId
-        const comments = await comment.comment.findOne(commentId);
+        const comments = await comment.comment.findOne(convertToObject(commentId));
 
         if (!comments) {
             return res.status(404).json({ message: 'No matching comment found.' });
@@ -39,10 +44,10 @@ const getComment = async (req, res) => {
 //Create new comment
 const createComment = async (req, res) => {
 
-    const { user, book, Comment, Date } = req.body;
+    const { user, swap, Comment, Date } = req.body;
 
     try{
-        const newComment = new comment.comment({ user, book, Comment, Date});
+        const newComment = new comment.comment({ user, swap, Comment, Date});
         await newComment.save();
 
         res.status(201).json({ message: 'Comment created!' });
@@ -57,19 +62,17 @@ const updateComment = async (req, res) => {
  
     try{
         const commentId = req.params.commentId;
+        const { user, swap, Comment, Date } = req.body;
 
-        const { user, book, Comment, Date } = req.body;
-
-        const updatedInfo = new comment.comment({ user, book, Comment, Date});
+        const updatedInfo = { user, swap, Comment, Date };
 
         let updatedComment = await comment.comment.findOneAndUpdate({ _id: commentId }, updatedInfo, {new: true});
 
         if (!updatedComment) {
-            return res.status(404).json({ message: 'No matching Swap found.' });
+            return res.status(404).json({ message: 'No matching comment found.' });
         }
 
         res.status(201).json({ message: 'Comment updated'});
-
     }catch (error) {
         console.error('updateComment error:', error);
         res.status(500).json({ message: 'Server error' });
@@ -80,7 +83,7 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {
     try{
         const commentId = req.params.commentId;
-        const deletedComment = await comment.comment.findByIdAndDelete(commentId);
+        const deletedComment = await comment.comment.findByIdAndDelete(convertToObject(commentId));
         if (!deletedComment) {
             return res.status(404).json({ message: 'No matching comment found.' });
         }
