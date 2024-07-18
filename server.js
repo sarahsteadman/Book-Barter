@@ -1,4 +1,3 @@
-
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
@@ -37,5 +36,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use('/', routes);
+
+// Start the server
+const PORT = process.env.PORT || 9000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app; // Export the app instance
