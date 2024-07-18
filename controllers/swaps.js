@@ -14,19 +14,18 @@ const getAllSwaps = async (req, res) => {
 
     try {
 
-        const user = req.user; // This assumes req.user contains the authenticated user object
-        console.log(JSON({ user }));
+       
 
         const swaps = await Swap.swap.find();
 
         if (!swaps[0]) {
-            return res.status(404).JSON({ message: 'No Swaps found.' });
+            return res.status(404).json({ message: 'No Swaps found.' });
         }
 
-        res.status(200).JSON(swaps);
+        res.status(200).json(swaps);
     } catch (error) {
         console.error('getAllSwaps error:', error);
-        res.status(500).JSON({ message: 'Server error: try later.' });
+        res.status(500).json({ message: 'Server error: try later.' });
     }
     
 };
@@ -39,12 +38,12 @@ const getSwap = async (req, res) => {
         const swaps = await Swap.swap.findOne(convertToObjectId(swapId));
 
         if (!swaps) {
-            return res.status(404).JSON({ message: 'No matching Swap found.' });
+            return res.status(404).json({ message: 'No matching Swap found.' });
         }
-        res.status(200).JSON(swaps);
+        res.status(200).json(swaps);
     } catch (error) {
         console.error('getSwap error:', error);
-        res.status(500).JSON({ message: 'Server error: try later.' });
+        res.status(500).json({ message: 'Server error: try later.' });
     }
 };
 
@@ -55,10 +54,10 @@ const getSwap = async (req, res) => {
 //         const bookId = req.params.bookId
 //         const swaps = await Swap.swap.findOne(bookId);
 
-//         res.status(200).JSON(swaps);
+//         res.status(200).json(swaps);
 //     } catch (error) {
 //         console.error('getSwapByBook error:', error);
-//         res.status(500).JSON({ message: 'Server error: try later.' });
+//         res.status(500).json({ message: 'Server error: try later.' });
 //     }
 // };
 
@@ -70,10 +69,10 @@ const getSwap = async (req, res) => {
 //         const userId = req.params.bookId
 //         const swaps = await Swap.swap.findOne(userId);
 
-//         res.status(200).JSON(swaps);
+//         res.status(200).json(swaps);
 //     } catch (error) {
 //         console.error('getSwapByUser error:', error);
-//         res.status(500).JSON({ message: 'Server error: try later.' });
+//         res.status(500).json({ message: 'Server error: try later.' });
 //     }
 // };
 
@@ -89,10 +88,10 @@ const createSwap = async (req, res) => {
         
         await newSwap.save();
 
-        res.status(201).JSON({ message: 'Swap created!' });
+        res.status(201).json({ message: 'Swap created!' });
     } catch (error) {
         console.error('createSwap error:', error);
-        res.status(500).JSON({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
@@ -126,11 +125,11 @@ const updateSwap = async (req, res) => {
 
         oldSwapInfo.save();
 
-        res.status(201).JSON({ message: 'Swap updated'});
+        res.status(201).json({ message: 'Swap updated'});
 
     }catch (error) {
         console.error('updateSwap error:', error);
-        res.status(500).JSON({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
@@ -149,14 +148,14 @@ const deleteSwap = async (req, res) => {
         const removedSwap = await Swap.swap.findByIdAndDelete(convertToObjectId(swapId));
 
         if (!removedSwap) {
-            return res.status(404).JSON({ message: 'No matching swap found.' });
+            return res.status(404).json({ message: 'No matching swap found.' });
         }
 
-        res.status(200).JSON({ message: 'Swap removed' });
+        res.status(200).json({ message: 'Swap removed' });
 
     }catch (error) {
         console.error('deleteSwap error:', error);
-        res.status(500).JSON({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
