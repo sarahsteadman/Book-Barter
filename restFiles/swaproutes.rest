@@ -1,0 +1,111 @@
+// ********* LOCAL LINKS  ********* //
+// ********* LOCAL LINKS  ********* //
+
+###
+#User registration
+###
+# POST /swaps/
+POST http://localhost:9000/swaps/
+Content-Type: application/json
+
+{
+    "user":"6680374d84ac2a468db8b1b3",
+    "book":"667f8e927be85037cf3b746b",
+    "Description":"Willing to trade for a hardcover fantasy book.",
+    "Location":"Conway, Arksansas"
+}
+
+
+###
+# Get all swaps
+###
+
+# GET /swaps/
+GET http://localhost:9000/swaps/
+
+###
+# Get single swap
+###
+
+# GET /swaps/:id
+GET http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+
+###
+# Update Swap (user must be the creator of the swap)
+###
+
+# PUT /swaps/:id
+PUT http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+Content-Type: application/json
+
+{
+    "user":"6680374d84ac2a468db8b1b3",
+    "book":"667f8e927be85037cf3b746b",
+    "Description":"Willing to trade for a hardcover fantasy book.",
+    "Location":"Fort Smith, Arksansas"
+}
+
+
+###
+#Delete Swap
+###
+# Delete /swaps/:id
+Delete http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+###
+
+
+
+// ********* Render LINKS  ********* //
+// ********* Render LINKS  ********* //
+
+###
+#Create swap (must be login)
+###
+# POST /swaps/
+POST https://book-barter.onrender.com/swaps/
+Content-Type: application/json
+
+{
+    "user":"6680374d84ac2a468db8b1b3",
+    "book":"667f8e927be85037cf3b746b",
+    "Description":"Willing to trade for a hardcover fantasy book.",
+    "Location":"Conway, Arksansas"
+}
+
+
+###
+# Get all swaps
+###
+
+# GET /swaps/
+GET https://book-barter.onrender.com/swaps/
+
+###
+# Get single swap
+###
+
+# GET /swaps/:id
+GET https://book-barter.onrender.com/swaps/6695effd0e73de4e8adabe83
+
+###
+# Update Swap (user must be the creator of the swap)
+###
+
+# PUT /swaps/:id
+PUT https://book-barter.onrender.com/swaps/6695effd0e73de4e8adabe83
+Content-Type: application/json
+
+{
+    "user":"6680374d84ac2a468db8b1b3",
+    "book":"667f8e927be85037cf3b746b",
+    "Description":"Willing to trade for a hardcover fantasy book.",
+    "Location":"Fort Smith, Arksansas"
+}
+
+
+###
+#Delete Swap
+###
+# Delete /swaps/:id
+Delete https://book-barter.onrender.com/swaps/6695effd0e73de4e8adabe83
+###
