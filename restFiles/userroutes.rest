@@ -9,10 +9,10 @@ POST http://localhost:9000/users/register
 Content-Type: application/json
 
 {
-  "name": "Santa Clause",
-  "email": "northpolecaptain@gmail.com",
-  "password": "",
-  "username": "sclause"
+  "name": "Michael Scott",
+  "email": "scrantonforever20@gmail.com",
+  "password": "hello1234",
+  "username": "mscott"
 }
 
 ###
@@ -60,3 +60,60 @@ Content-Type: application/json
 
 // ********* RENDER LINKS  ********* //
 // ********* RENDER LINKS  ********* //
+
+
+###
+#User registration
+###
+# POST /users/register
+POST http://book-barter.onrender.com/users/register
+Content-Type: application/json
+
+{
+  "name": "Michael Scott",
+  "email": "scrantonforever20@gmail.com",
+  "password": "hello1234",
+  "username": "mscott"
+}
+
+###
+# User Login
+###
+
+# POST /users/login
+POST http://book-barter.onrender.com/users/login
+Content-Type: application/json
+
+{
+  "login": "scrantonforever20@gmail.com",
+  "password": "hello1234"
+}
+
+###
+# User Logout
+###
+
+# GET /users/logout
+GET http://book-barter.onrender.com/users/logout
+
+###
+# Get User Profile
+###
+
+# GET /users/profile
+GET http://book-barter.onrender.com/users/profile
+
+###
+# Update User Profile with Password Verification
+###
+
+# PUT /users/profile
+PUT http://book-barter.onrender.com/users/profile
+Content-Type: application/json
+
+{
+  "name": "Michael Scott",
+  "email": "scrantonforever20@gmail.com",
+  "password": "",
+  "username": ""
+}

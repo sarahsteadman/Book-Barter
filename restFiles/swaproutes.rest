@@ -9,7 +9,7 @@ POST http://localhost:9000/swaps/
 Content-Type: application/json
 
 {
-    "user":"6680374d84ac2a468db8b1b3",
+    "user":"667c836fd4985e072a44e1ca",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
     "Location":"Bentonville, Arksansas"
@@ -66,10 +66,10 @@ POST https://book-barter.onrender.com/swaps/
 Content-Type: application/json
 
 {
-    "user":"6680374d84ac2a468db8b1b3",
+    "user":"66995366cd8732b739e5bc46",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
-    "Location":"Pine Bluff, Arksansas"
+    "Location":"Santaville, North Pole"
 }
 
 
