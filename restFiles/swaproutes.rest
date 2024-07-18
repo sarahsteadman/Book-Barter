@@ -12,7 +12,7 @@ Content-Type: application/json
     "user":"6680374d84ac2a468db8b1b3",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
-    "Location":"Conway, Arksansas"
+    "Location":"Bentonville, Arksansas"
 }
 
 
@@ -28,21 +28,21 @@ GET http://localhost:9000/swaps/
 ###
 
 # GET /swaps/:id
-GET http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+GET http://localhost:9000/swaps/669897e91c5845b65b08decd
 
 ###
 # Update Swap (user must be the creator of the swap)
 ###
 
 # PUT /swaps/:id
-PUT http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+PUT http://localhost:9000/swaps/669897e91c5845b65b08decd
 Content-Type: application/json
 
 {
     "user":"6680374d84ac2a468db8b1b3",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
-    "Location":"Fort Smith, Arksansas"
+    "Location":"Bryant, Arksansas"
 }
 
 
@@ -50,7 +50,7 @@ Content-Type: application/json
 #Delete Swap
 ###
 # Delete /swaps/:id
-Delete http://localhost:9000/swaps/6695effd0e73de4e8adabe83
+Delete http://localhost:9000/swaps/669897e91c5845b65b08decd
 ###
 
 
@@ -69,7 +69,7 @@ Content-Type: application/json
     "user":"6680374d84ac2a468db8b1b3",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
-    "Location":"Conway, Arksansas"
+    "Location":"Pine Bluff, Arksansas"
 }
 
 
@@ -85,7 +85,7 @@ GET https://book-barter.onrender.com/swaps/
 ###
 
 # GET /swaps/:id
-GET https://book-barter.onrender.com/swaps/6695effd0e73de4e8adabe83
+GET https://book-barter.onrender.com/swaps/66989431ea1202792f61a39c
 
 ###
 # Update Swap (user must be the creator of the swap)
@@ -107,5 +107,5 @@ Content-Type: application/json
 #Delete Swap
 ###
 # Delete /swaps/:id
-Delete https://book-barter.onrender.com/swaps/6695effd0e73de4e8adabe83
+Delete https://book-barter.onrender.com/swaps/66989431ea1202792f61a39c
 ###
