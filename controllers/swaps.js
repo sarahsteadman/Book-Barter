@@ -14,8 +14,7 @@ const getAllSwaps = async (req, res) => {
 
     try {
 
-        const user = req.user; // This assumes req.user contains the authenticated user object
-        console.log(json({ user }));
+       
 
         const swaps = await Swap.swap.find();
 
@@ -103,8 +102,8 @@ const updateSwap = async (req, res) => {
     try{
         const swapId = req.params.swapId;
 
-        //should I use the User variable or require that they send the user's id?
-        // const userId = req.user._id
+        //add functionality to verify user is the owner of the swap
+        await auth.isCreator(req, "swap", swapId, res);
 
 
         const { user, book, Description, Location } = req.body;
@@ -113,8 +112,6 @@ const updateSwap = async (req, res) => {
 
         let oldSwapInfo = await Swap.swap.findOne(convertToObjectId(swapId));
 
-        //add functionality to verify user is the owner of the swap
-        await auth.isCreator(req, "swap", oldSwapInfo._id, res);
 
 
 
@@ -141,10 +138,9 @@ const deleteSwap = async (req, res) => {
 
         const swapId = req.params.swapId;
         
-        //should I use the User variable or require that they send the user's id?
-        const userId = req.params.userId;
 
         //add functionality to verify user is the owner of the swap
+        await auth.isCreator(req, "swap", swapId, res);
 
         const removedSwap = await Swap.swap.findByIdAndDelete(convertToObjectId(swapId));
 

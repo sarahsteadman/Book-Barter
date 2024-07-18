@@ -1,3 +1,4 @@
+
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
@@ -12,6 +13,7 @@ dotenv.config();
 
 const app = express();
 
+// Database connection
 connectDB();
 
 // Middleware setup
@@ -36,6 +38,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 app.use('/', routes);
 
-const PORT = process.env.PORT || 9000;
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app; // Export the app instance

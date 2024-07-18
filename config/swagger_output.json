@@ -199,7 +199,7 @@
                 "user": {
                   "example": "any"
                 },
-                "book": {
+                "swap": {
                   "example": "any"
                 },
                 "Comment": {
@@ -263,7 +263,7 @@
                 "user": {
                   "example": "any"
                 },
-                "book": {
+                "swap": {
                   "example": "any"
                 },
                 "Comment": {
@@ -582,17 +582,8 @@
           "201": {
             "description": "Created"
           },
-          "400": {
-            "description": "Bad Request"
-          },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
