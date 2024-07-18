@@ -52,7 +52,7 @@ Get http://book-barter.onrender.com/books/
 ###
 #Get book by id
 ###
-Get http://book-barter.onrender.com/books/667f8f717be85037cf3b7475
+Get http://book-barter.onrender.com/books/668f60ec7ccffaa7e55a3d71
 
 ###
 #Book creation
@@ -69,7 +69,7 @@ Content-Type: application/json
 ###
 #Update Book by ID
 ###
-Put http://book-barter.onrender.com/books/updateBook/667f8e927be85037cf3b746b
+Put http://book-barter.onrender.com/books/updateBook/668f60a17ccffaa7e55a3d6f
 Content-Type: application/json
 
 {

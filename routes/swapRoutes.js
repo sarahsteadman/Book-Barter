@@ -1,5 +1,5 @@
 const express = require('express');
-const { isLoggedOn, isCreator } = require('../middlewares/auth')
+const { isLoggedOn } = require('../middlewares/auth')
 const router = express.Router();
 const swapsController = require('../controllers/swaps');
 
