@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 let testUserIds = [];
 const dbUrl = 'mongodb://localhost:27017/bookbarter-test';
 
+
 beforeAll(async () => {
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -34,7 +35,7 @@ const createUser = async (userData) => {
   if (user) {
     testUserIds.push(user._id);
   }
-  
+
   return response;
 };
 
@@ -49,7 +50,11 @@ const loginUser = async (loginData) => {
   return response;
 };
 
+// /////////////////////////////////////////////////TESTS////////////////////////////////////////////////////////////////
+
 describe('User Routes', () => {
+
+  // Register
   test('should register a user', async () => {
     const userData = {
       name: 'John Doe',
@@ -67,6 +72,7 @@ describe('User Routes', () => {
     expect(user).toBeTruthy();
   });
 
+  //Log in
   test('should log in a user', async () => {
     const userData = {
       name: 'Jane Doe',
@@ -75,7 +81,8 @@ describe('User Routes', () => {
       username: 'janedoe'
     };
 
-    await createUser(userData);
+    const creation = await createUser(userData);
+    expect(creation.body.message).toBe('User registered successfully');
 
     const loginData = {
       login: userData.email, // Ensure this matches what your server expects
@@ -89,6 +96,7 @@ describe('User Routes', () => {
     expect(response.body.token).toBeDefined(); // Ensure token is returned
   });
 
+  //Get Profile
   test('should get user profile', async () => {
     const userData = {
       name: 'Emily Doe',
@@ -100,7 +108,7 @@ describe('User Routes', () => {
     await createUser(userData);
 
     const loginData = {
-      login: userData.email, // Ensure this matches what your server expects
+      login: userData.email,
       password: userData.password
     };
 
@@ -121,6 +129,7 @@ describe('User Routes', () => {
     expect(profileResponse.body.user.email).toBe(userData.email);
   });
 
+  //Update Profile
   test('should update user profile', async () => {
     const userData = {
       name: 'Sarah Doe',
@@ -157,6 +166,7 @@ describe('User Routes', () => {
     expect(updateResponse.body.message).toBe('Profile updated successfully');
   });
 
+  //LogOut
   test('should log out a user', async () => {
     const userData = {
       name: 'Logan Doe',

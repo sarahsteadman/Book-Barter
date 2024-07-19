@@ -6,8 +6,8 @@ const swapsController = require('../controllers/swaps');
 router.get('/', swapsController.getAllSwaps);
 router.get('/:swapId', swapsController.getSwap);
 router.post('/', swapsController.createSwap);
-router.put('/:swapId', swapsController.updateSwap);
-router.delete('/:swapId', swapsController.deleteSwap);
+router.put('/:swapId', isLoggedOn, swapsController.updateSwap);
+router.delete('/:swapId', isLoggedOn, swapsController.deleteSwap);
 
 module.exports = router;
 

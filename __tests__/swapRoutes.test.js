@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const app = require('../server'); // Adjust the path to your server file
 const Swap = require('../models/swapsModel').swap; // Adjust the path to your swap model
 
+jest.mock('../middlewares/auth.js', () => require('./__mocks__/mockAuth'));
+
 describe('Swap Routes', () => {
   let swapIds = []; // Array to store IDs of created swaps
 
