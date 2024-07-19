@@ -45,5 +45,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Routes
 app.use('/', routes);
 
-// Export the app and server
+if (process.env.NODE_ENV !== 'test') {
+    // Start the server only if not in test environment
+    const PORT = process.env.PORT || 9000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
 module.exports = app;

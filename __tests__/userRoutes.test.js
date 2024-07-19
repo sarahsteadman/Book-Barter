@@ -1,3 +1,4 @@
+
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../server');
@@ -7,6 +8,7 @@ const dbUrl = 'mongodb://localhost:27017/bookbarter-test';
 let testUserIds = [];
 
 beforeAll(async () => {
+  
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
