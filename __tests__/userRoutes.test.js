@@ -1,17 +1,16 @@
-
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../server');
 const User = require('../models/userModel');
+const mockAuth = require('../__tests__/__mocks__/mockAuth'); // Import the mock middleware
 
 const dbUrl = 'mongodb://localhost:27017/bookbarter-test';
 let testUserIds = [];
-
+jest.mock('../middlewares/auth.js', () => require('../__tests__/__mocks__/mockAuth'));
+// Use mocks in your test setup
 beforeAll(async () => {
-  
   if (mongoose.connection.readyState === 0) {
     await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-
   }
 });
 
@@ -25,7 +24,6 @@ afterEach(async () => {
 afterAll(async () => {
   if (mongoose.connection.readyState !== 0) {
     await mongoose.connection.close();
-
   }
 });
 
@@ -34,7 +32,6 @@ const createUser = async (userData) => {
     .post('/users/register')
     .send(userData);
 
-  
   const user = await User.findOne({ email: userData.email });
   if (user) {
     testUserIds.push(user._id);
@@ -48,7 +45,6 @@ const loginUser = async (loginData) => {
     .post('/users/login')
     .send(loginData);
 
-  
   return response;
 };
 
@@ -100,22 +96,28 @@ describe('User Routes', () => {
       password: 'Password123',
       username: 'emilydoe'
     };
-
-    await createUser(userData);
-
+  
+    const creation = await createUser(userData);
+    console.log('Creation Response:', creation.body);
+  
+    expect(creation.body.message).toBe('User registered successfully');
+    expect(creation.body.user).toBeDefined();
+    
+    // Ensure the user data is correctly set in mockAuth
+    mockAuth.setMockUser({ _id: creation.body.user._id, email: userData.email });
+  
     const loginData = {
       login: userData.email,
       password: userData.password
     };
-
+  
     const loginResponse = await loginUser(loginData);
     const token = loginResponse.body.token;
-
-
+  
     const profileResponse = await request(app)
       .get('/users/profile')
       .set('Authorization', `Bearer ${token}`);
-
+  
     expect(profileResponse.status).toBe(200);
     expect(profileResponse.body.user).toBeDefined();
     expect(profileResponse.body.user.email).toBe(userData.email);
@@ -129,7 +131,8 @@ describe('User Routes', () => {
       username: 'sarahdoe'
     };
 
-    await createUser(userData);
+    const creation = await createUser(userData);
+    expect(creation.body.message).toBe('User registered successfully');
 
     const loginData = {
       login: userData.email,
@@ -138,7 +141,6 @@ describe('User Routes', () => {
 
     const loginResponse = await loginUser(loginData);
     const token = loginResponse.body.token;
-
 
     const updateData = {
       name: 'Sarah Updated',
@@ -163,7 +165,8 @@ describe('User Routes', () => {
       username: 'logandoe'
     };
 
-    await createUser(userData);
+    const creation = await createUser(userData);
+    expect(creation.body.message).toBe('User registered successfully');
 
     const loginData = {
       login: userData.email,
@@ -172,7 +175,6 @@ describe('User Routes', () => {
 
     const loginResponse = await loginUser(loginData);
     const token = loginResponse.body.token;
-
 
     const logoutResponse = await request(app)
       .get('/users/logout')

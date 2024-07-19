@@ -9,10 +9,10 @@ POST http://localhost:9000/users/register
 Content-Type: application/json
 
 {
-  "name": "Michael Scott",
-  "email": "scrantonforever20@gmail.com",
+  "name": "Test User",
+  "email": "test@example.com",
   "password": "hello1234",
-  "username": "mscott"
+  "username": "testuser"
 }
 
 ###
@@ -24,7 +24,7 @@ POST http://localhost:9000/users/login
 Content-Type: application/json
 
 {
-  "login": "scrantonforever22@gmail.com",
+  "login": "mscott",
   "password": "hello1234"
 }
 
@@ -51,7 +51,7 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever22@gmail.com",
+  "email": "scrantonforever@gmail.com",
   "password": "hello1234",
   "username": "mscott"
 }

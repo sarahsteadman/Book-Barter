@@ -5,9 +5,8 @@ const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./config/swagger_output.json');
 const cors = require('cors');
-const passport = require('./config/passport'); // Import Passport configuration
-const session = require('express-session'); // Import express-session
-const MongoStore = require('connect-mongo'); // Import connect-mongo to store session in MongoDB
+const passport = require('./config/passport');
+const session = require('express-session');
 
 dotenv.config();
 
@@ -25,14 +24,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI, // Use the MongoDB URI from .env
-        collectionName: 'sessions'
-    }),
-    cookie: {
-        secure: false, // Ensure secure is false for local development
-        maxAge: 1000 * 60 * 60 * 24 // 1 day
-    }
+    cookie: { secure: false }
 }));
 
 // Initialize Passport and session middleware
@@ -42,11 +34,20 @@ app.use(passport.session());
 // Serve Swagger UI at /api-docs route
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Conditionally apply mock middleware for tests
+if (process.env.NODE_ENV === 'test') {
+    const { isLoggedOn, isCreator } = require('./__tests__/__mocks__/mockAuth');
+    app.use(isLoggedOn);
+    app.use((req, res, next) => {
+        req.isCreator = isCreator;
+        next();
+    });
+}
+
 // Routes
 app.use('/', routes);
 
 if (process.env.NODE_ENV !== 'test') {
-    // Start the server only if not in test environment
     const PORT = process.env.PORT || 9000;
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
