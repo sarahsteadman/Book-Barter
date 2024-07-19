@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "swagger": "node ./config/swagger.js",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "dev": "nodemon server.js"
   },
   "keywords": [],

@@ -29,7 +29,10 @@ const registerUser = async (req, res) => {
 
         await newUser.save();
 
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({
+            message: 'User registered successfully',
+            user: { _id: newUser._id, name: newUser.name, email: newUser.email, username: newUser.username } // Include user details
+        });
     } catch (error) {
         console.error('Error in registerUser:', error);
         res.status(500).json({ message: 'Server error' });
@@ -132,46 +135,24 @@ const getUserProfile = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-    const { name, email, currentPassword, newPassword, username } = req.body;
-
     try {
-        let user = req.user; // Assuming req.user contains the authenticated user object
-
-        // Log req.user to debug
-        console.log('req.user:', req.user);
-
-        if (!user) {
-            return res.status(400).json({ message: 'User not found' });
-        }
-
-        // Verify current password
-        if (currentPassword) {
-            const isMatch = await bcrypt.compare(currentPassword, user.password);
-            if (!isMatch) {
-                return res.status(400).json({ message: 'Current password is incorrect' });
-            }
-        }
-
-        // Update user details
-        user.name = name;
-        user.email = email;
-        user.username = username || user.username;
-
-        // If newPassword is provided, update password
-        if (newPassword) {
-            const hashedPassword = await bcrypt.hash(newPassword, 12);
-            user.password = hashedPassword;
-        }
-
-        // Save updated user
-        await user.save();
-
-        res.json({ message: 'Profile updated successfully', user });
+      const user = await User.findById(req.user._id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Update user properties
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.username = req.body.username || user.username;
+  
+      await user.save(); // Save the updated user document
+  
+      res.status(200).json({ message: 'Profile updated successfully', user });
     } catch (error) {
-        console.error('Error in updateUserProfile:', error);
-        res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: 'Server error', error });
     }
-};
+  };
 
 const updateUserUsername = async (req, res) => {
     const { userId, username } = req.body;

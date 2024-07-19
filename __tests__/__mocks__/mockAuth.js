@@ -1,16 +1,18 @@
 // __mocks__/mockAuth.js
-
-const isLoggedOn = (req, res, next) => {
-    // This mock function just calls next() to simulate a logged-in user.
-    return next();
-};
-
-const isCreator = async (req, type, id, res) => {
-    // This mock function always returns true.
-    return true;
-};
+const mockUser = {}; // This will hold user data that you set in your tests
 
 module.exports = {
-    isLoggedOn,
-    isCreator,
+  isLoggedOn: (req, res, next) => {
+    // Use a dynamic user ID based on the mockUser
+    req.user = mockUser;
+    next();
+  },
+  isCreator: (req, res, next) => {
+    // Simulate a creator check
+    next();
+  },
+  setMockUser: (user) => {
+    mockUser._id = user._id;
+    mockUser.email = user.email;
+  }
 };

@@ -28,18 +28,18 @@ GET http://localhost:9000/swaps/
 ###
 
 # GET /swaps/:id
-GET http://localhost:9000/swaps/669abbf800628c08fe75320c
+GET http://localhost:9000/swaps/669ac33e2b8b2fc8920fd8b9
 
 ###
 # Update Swap (user must be the creator of the swap)
 ###
 
 # PUT /swaps/:id
-PUT http://localhost:9000/swaps/669abbf800628c08fe75320c
+PUT http://localhost:9000/swaps/669ac33e2b8b2fc8920fd8b9
 Content-Type: application/json
 
 {
-    "user":"6699612b9290d13acb5bf756",
+    "user":"667c836fd4985e072a44e1ca",
     "book":"667f8e927be85037cf3b746b",
     "Description":"Willing to trade for a hardcover fantasy book.",
     "Location":"Bryant, Arksansas"
