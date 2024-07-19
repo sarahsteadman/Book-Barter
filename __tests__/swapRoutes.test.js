@@ -35,10 +35,10 @@ describe('Swap Routes', () => {
   // Test for adding a new swap
   it('should add a new swap', async () => {
     const newSwap = {
-      user: '667c836fd4985e072a44e1ca',
-      book: '667f8e927be85037cf3b746b',
+      user: '667c836fd4985e072a44e1ca', // Adjust with a valid user ID
+      book: '667f8e927be85037cf3b746b', // Adjust with a valid book ID
       Description: 'Willing to trade for a hardcover fantasy book.',
-      Location: 'Bentonville, Arkansas',
+      Location: 'Bentonville, Arkansas'
     };
 
     const res = await request(app)
@@ -55,10 +55,10 @@ describe('Swap Routes', () => {
   it('should get a swap by ID', async () => {
     // First, add a new swap to get its ID
     const newSwap = new Swap({
-      user: '667c836fd4985e072a44e1ca',
-      book: '667f8e927be85037cf3b746b',
+      user: '667c836fd4985e072a44e1ca', // Adjust with a valid user ID
+      book: '667f8e927be85037cf3b746b', // Adjust with a valid book ID
       Description: 'Willing to trade for a hardcover fantasy book.',
-      Location: 'Bentonville, Arkansas',
+      Location: 'Bentonville, Arkansas'
     });
     const savedSwap = await newSwap.save();
     swapIds.push(savedSwap._id); // Store the swap ID for future cleanup
@@ -72,19 +72,19 @@ describe('Swap Routes', () => {
   it('should update a swap by ID', async () => {
     // First, add a new swap to get its ID
     const newSwap = new Swap({
-      user: '667c836fd4985e072a44e1ca',
-      book: '667f8e927be85037cf3b746b',
+      user: '667c836fd4985e072a44e1ca', // Adjust with a valid user ID
+      book: '667f8e927be85037cf3b746b', // Adjust with a valid book ID
       Description: 'Willing to trade for a hardcover fantasy book.',
-      Location: 'Bentonville, Arkansas',
+      Location: 'Bentonville, Arkansas'
     });
     const savedSwap = await newSwap.save();
     swapIds.push(savedSwap._id); // Store the swap ID for future cleanup
 
     const updatedSwap = {
-      user: '667c836fd4985e072a44e1ca',
-      book: '667f8e927be85037cf3b746b',
-      Description: 'Willing to trade for a hardcover mystery book.',
-      Location: 'Bryant, Arkansas',
+      user: '667c836fd4985e072a44e1ca', // Adjust with a valid user ID
+      book: '667f8e927be85037cf3b746b', // Adjust with a valid book ID
+      Description: 'Willing to trade for a hardcover fantasy book.',
+      Location: 'Bryant, Arkansas'
     };
 
     const res = await request(app)
@@ -93,17 +93,17 @@ describe('Swap Routes', () => {
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('message', 'Swap updated');
     const fetchedSwap = await Swap.findById(savedSwap._id);
-    expect(fetchedSwap).toHaveProperty('Description', 'Willing to trade for a hardcover mystery book.');
+    expect(fetchedSwap).toHaveProperty('Location', 'Bryant, Arkansas');
   });
 
   // Test for deleting a swap by ID
   it('should delete a swap by ID', async () => {
     // First, add a new swap to get its ID
     const newSwap = new Swap({
-      user: '667c836fd4985e072a44e1ca',
-      book: '667f8e927be85037cf3b746b',
+      user: '667c836fd4985e072a44e1ca', // Adjust with a valid user ID
+      book: '667f8e927be85037cf3b746b', // Adjust with a valid book ID
       Description: 'Willing to trade for a hardcover fantasy book.',
-      Location: 'Bentonville, Arkansas',
+      Location: 'Bentonville, Arkansas'
     });
     const savedSwap = await newSwap.save();
     swapIds.push(savedSwap._id); // Store the swap ID for future cleanup
