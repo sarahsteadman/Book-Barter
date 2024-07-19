@@ -1,7 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../server'); // Adjust the path to your server file
-const Book = require('../models/bookModel'); // Adjust the path to your book model
+const app = require('../server'); // Import the app instance
+const Book = require('../models/bookModel')
 
 describe('Book Routes', () => {
   let bookIds = []; // Array to store IDs of created books

@@ -52,7 +52,7 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever@gmail.com",
+  "email": "scrantonforever22@gmail.com",
   "password": "hello1234",
   "username": "mscott"
 }
@@ -113,7 +113,7 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever20@gmail.com",
+  "email": "scrantonforever@gmail.com",
   "password": "",
   "username": ""
 }
