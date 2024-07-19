@@ -1,17 +1,19 @@
 const request = require('supertest');
-const app = require('../server'); // Adjust the path to your server file
+const app = require('../server');
 const mongoose = require('mongoose');
 
+const dbUrl = 'mongodb://localhost:27017/bookbarter-test';
+
 beforeAll(async () => {
-  await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    // Add other options as needed
-  });
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  }
 });
 
 afterAll(async () => {
-  await mongoose.connection.close();
+  if (mongoose.connection.readyState !== 0) {
+    await mongoose.disconnect(); // Use disconnect instead of close
+  }
 });
 
 describe('Server', () => {

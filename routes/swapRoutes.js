@@ -7,7 +7,7 @@ router.get('/', swapsController.getAllSwaps);
 router.get('/:swapId', swapsController.getSwap);
 router.post('/', swapsController.createSwap);
 router.put('/:swapId', isLoggedOn, swapsController.updateSwap);
-router.delete('/:swapId', swapsController.deleteSwap);
+router.delete('/:swapId', isLoggedOn, swapsController.deleteSwap);
 
 module.exports = router;
 

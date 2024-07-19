@@ -97,35 +97,27 @@ const createSwap = async (req, res) => {
 
 //a user can update their personal swap. User must be loggedin and their id must match the id of that in the swap document.
 const updateSwap = async (req, res) => {
-
-    
-    try{
+    try {
         const swapId = req.params.swapId;
 
-        //add functionality to verify user is the owner of the swap
+        // Verify user is the owner of the swap
         await auth.isCreator(req, "swap", swapId, res);
-
 
         const { user, book, Description, Location } = req.body;
 
-        
-
         let oldSwapInfo = await Swap.swap.findOne(convertToObjectId(swapId));
-
-
-
 
         oldSwapInfo.user = user;
         oldSwapInfo.book = book;
         oldSwapInfo.Description = Description;
         oldSwapInfo.Location = Location;
 
+        // Ensure save operation is awaited
+        await oldSwapInfo.save();
 
-        oldSwapInfo.save();
+        res.status(201).json({ message: 'Swap updated' });
 
-        res.status(201).json({ message: 'Swap updated'});
-
-    }catch (error) {
+    } catch (error) {
         console.error('updateSwap error:', error);
         res.status(500).json({ message: 'Server error' });
     }

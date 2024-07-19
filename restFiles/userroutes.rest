@@ -52,7 +52,7 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever@gmail.com",
+  "email": "scrantonforever22@gmail.com",
   "password": "hello1234",
   "username": "mscott"
 }
@@ -70,10 +70,10 @@ POST http://book-barter.onrender.com/users/register
 Content-Type: application/json
 
 {
-  "name": "Michael Scott",
-  "email": "scrantonforever20@gmail.com",
-  "password": "hello1234",
-  "username": "mscott"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "Password123",
+  "username": "johndoe"
 }
 
 ###
@@ -113,7 +113,7 @@ Content-Type: application/json
 
 {
   "name": "Michael Scott",
-  "email": "scrantonforever20@gmail.com",
+  "email": "scrantonforever@gmail.com",
   "password": "",
   "username": ""
 }
