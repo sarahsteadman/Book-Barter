@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const app = require('../server'); // Adjust the path to your server file
 const Comment = require('../models/commentModel').comment; // Adjust the path to your comment model
 
+jest.mock('../middlewares/auth.js', () => require('./__mocks__/mockAuth'));
+
 describe('Comment Routes', () => {
   let commentIds = []; // Array to store IDs of created comments
 

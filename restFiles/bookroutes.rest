@@ -7,7 +7,7 @@ Get http://localhost:9000/books/
 ###
 #Get book by id
 ###
-Get http://localhost:9000/books/667f8f717be85037cf3b7475
+Get http://localhost:9000/books/669bdf8bcdde5641b605fbb8
 
 ###
 #Book creation
@@ -40,7 +40,7 @@ Content-Type: application/json
 ###
 #Delete book by id
 ###
-Delete http://localhost:9000/books/deleteBook/667f923035495f463c70bab2
+Delete http://localhost:9000/books/deleteBook/669bdf8bcdde5641b605fbb8
 ###
 
 // ********* RENDER LINKS  ********* //

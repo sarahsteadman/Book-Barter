@@ -1,7 +1,9 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../server'); // Import the app instance
-const Book = require('../models/bookModel')
+const Book = require('../models/bookModel');
+
+jest.mock('../middlewares/auth.js', () => require('./__mocks__/mockAuth'));
 
 describe('Book Routes', () => {
   let bookIds = []; // Array to store IDs of created books
