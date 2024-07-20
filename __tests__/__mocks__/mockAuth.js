@@ -7,10 +7,10 @@ module.exports = {
     req.user = mockUser;
     next();
   },
-  isCreator: (req, res, next) => {
+/*   isCreator: (req, res, next) => {
     // Simulate a creator check
     next();
-  },
+  }, */
   setMockUser: (user) => {
     mockUser._id = user._id;
     mockUser.email = user.email;

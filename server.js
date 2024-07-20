@@ -36,12 +36,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Conditionally apply mock middleware for tests
 if (process.env.NODE_ENV === 'test') {
-    const { isLoggedOn, isCreator } = require('./__tests__/__mocks__/mockAuth');
+    const { isLoggedOn,} = require('./__tests__/__mocks__/mockAuth');
     app.use(isLoggedOn);
-    app.use((req, res, next) => {
-        req.isCreator = isCreator;
-        next();
-    });
+
 }
 
 // Routes
