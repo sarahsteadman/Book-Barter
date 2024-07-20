@@ -101,7 +101,7 @@ const updateSwap = async (req, res) => {
         const swapId = req.params.swapId;
 
         // Verify user is the owner of the swap
-        await auth.isCreator(req, "swap", swapId, res);
+        // await auth.isCreator(req, "swap", swapId, res);
 
         const { user, book, Description, Location } = req.body;
 
@@ -132,7 +132,7 @@ const deleteSwap = async (req, res) => {
         
 
         //add functionality to verify user is the owner of the swap
-        await auth.isCreator(req, "swap", swapId, res);
+        // await auth.isCreator(req, "swap", swapId, res);
 
         const removedSwap = await Swap.swap.findByIdAndDelete(convertToObjectId(swapId));
 
